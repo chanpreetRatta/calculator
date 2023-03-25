@@ -29,6 +29,7 @@ body{
     height: 100px;
     width: 300px;
     background-color: #1C1C1C;
+    opacity: .9;
     font-size: 3rem; 
     font-weight: 200;
     display: flex;

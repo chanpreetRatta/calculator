@@ -6,8 +6,24 @@ let OPERATOR = undefined;
 
 function userInput() {
   let input = this.dataset.value;
+  let className = this.className.split(" ").includes("number");
+  if (input === "clear") {
+    display[0].textContent = 0;
+    FIRST_VALUE = "";
+    SECOND_VALUE = "";
+    OPERATOR = undefined;
+  }
 
-  if (!OPERATOR && !isOperator(input)) {
+  /* work on positive negative */
+  if (input === "positiveNegative") {
+    if (!FIRST_VALUE === "") {
+      FIRST_VALUE * -1;
+    } else {
+      SECOND_VALUE * -1;
+    }
+  }
+
+  if (!OPERATOR && !isOperator(input) && className) {
     if (display[0].textContent === "0") {
       display[0].textContent = input;
       FIRST_VALUE += input;
@@ -20,7 +36,7 @@ function userInput() {
     display[0].textContent = 0;
   } else if (input === "equals") {
     display[0].textContent = result(FIRST_VALUE, SECOND_VALUE, OPERATOR);
-  } else {
+  } else if (className) {
     if (display[0].textContent === "0") {
       display[0].textContent = input;
       SECOND_VALUE += input;
@@ -46,6 +62,14 @@ function isOperator(value) {
 function result(firstValue, secondValue, operator) {
   if (operator === "plus") {
     return +firstValue + +secondValue;
+  } else if (operator === "multiply") {
+    return +firstValue * +secondValue;
+  } else if (operator === "divide") {
+    return +firstValue / +secondValue;
+  } else if (operator === "minus") {
+    return +firstValue - +secondValue;
+  } else if (operator === "reminder") {
+    return +firstValue / +secondValue;
   }
 }
 

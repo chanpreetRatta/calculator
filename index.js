@@ -1,6 +1,8 @@
 let display = document.getElementsByClassName("display");
 let buttons = document.querySelectorAll(".button");
 let clearButton = document.querySelector(`[data-value="clear"]`);
+let numbers = document.querySelectorAll(`[data-value="numbers"]`);
+let operators = document.querySelectorAll(`[data-value="operators"]`);
 
 let equation = {
   firstNumber: "",
@@ -9,27 +11,26 @@ let equation = {
 };
 
 function updateTheDisplay() {
-  console.log("display Updated");
+  display[0].removeChild(display[0].firstChild);
+  display[0].appendChild(document.createTextNode(value));
 }
 
 function clearDisplay() {
   display[0].removeChild(display[0].firstChild);
   display[0].appendChild(document.createTextNode("0"));
+  equation = {};
 }
 
-function isOperator(value) {
-  let operators = ["divide", "multiply", "minus", "plus"];
-  return operators.includes(value.target.dataset.value);
+function getNumbers(event) {
+  updateTheDisplay();
 }
 
-function getUserInput(event) {
-  if (isOperator(event) && equation.firstNumber) {
-    equation.operator = event.target.dataset.value;
-  } else if (!equation.firstNumber) equation.firstNumber = event;
+function getOperator(event) {
+  if (equation.firstNumber) equation.operator = event.target.innerHTML;
 }
-
-buttons.forEach((button) => {
-  button.addEventListener("click", getUserInput);
-});
 
 clearButton.addEventListener("click", clearDisplay);
+numbers.forEach((number) => number.addEventListener("click", getNumbers));
+operators.forEach((operator) =>
+  operator.addEventListener("click", getOperator)
+);

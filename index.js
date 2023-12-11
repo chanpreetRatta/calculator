@@ -8,6 +8,8 @@ let positiveNegative = document.querySelector(
   `[data-value="positiveNegative"]`
 );
 
+// this object will save the get the numbers, operator and store the result.
+// this object will also help updateDisplay() to update the DOM.
 let equation = {
   firstNumber: "",
   secondNumber: "",
@@ -15,6 +17,7 @@ let equation = {
   result: "",
 };
 
+//this function will only calculate the results life an idiot calculator, but this is IIFE function.
 const calculator = (() => {
   const add = (a, b) => parseInt(a) + parseInt(b);
   const minus = (a, b) => parseInt(a) - parseInt(b);
@@ -24,6 +27,7 @@ const calculator = (() => {
   return { add, minus, divide, multiply };
 })();
 
+//updates the display, get the data from equation and manipulate the ""display" DOM object.
 function updateTheDisplay() {
   display[0].removeChild(display[0].firstChild);
 
@@ -47,6 +51,8 @@ function clearDisplay() {
   };
 }
 
+// this function will convert the input values like "+" to "plus" so that we can store them in equation.
+// then later on its easier to use them to call a function.
 function getOperator(event) {
   let signMeaning = {
     "+": "add",
@@ -60,6 +66,8 @@ function getOperator(event) {
     equation.operator = signMeaning[`${event.target.innerHTML}`];
 }
 
+// to get numbers only from the DOM.
+// this function is trigged on number DOM that we declared at the start of the document
 function getNumbers(event) {
   let value = event.target.innerHTML;
   equation.operator
@@ -68,6 +76,7 @@ function getNumbers(event) {
   updateTheDisplay();
 }
 
+// trigged from -/+ operator to change number to negative
 function changeNegation() {
   equation.operator
     ? (equation.secondNumber = equation.secondNumber * -1)
@@ -76,6 +85,7 @@ function changeNegation() {
   updateTheDisplay();
 }
 
+// get the result and then call the updateTheDisplay to update
 function getResult() {
   if (!(equation.firstNumber && equation.operator)) return;
   let result = calculator[equation.operator](
@@ -87,6 +97,7 @@ function getResult() {
   updateTheDisplay();
 }
 
+// all the onClick event are below
 clearButton.addEventListener("click", clearDisplay);
 numbers.forEach((number) => number.addEventListener("click", getNumbers));
 operators.forEach((operator) =>

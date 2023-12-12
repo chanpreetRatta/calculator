@@ -19,10 +19,10 @@ let equation = {
 
 //this function will only calculate the results life an idiot calculator, but this is IIFE function.
 const calculator = (() => {
-  const add = (a, b) => parseInt(a) + parseInt(b);
-  const minus = (a, b) => parseInt(a) - parseInt(b);
-  const divide = (a, b) => parseInt(a) / parseInt(b);
-  const multiply = (a, b) => parseInt(a) * parseInt(b);
+  const add = (a, b) => parseFloat(a) + parseFloat(b);
+  const minus = (a, b) => parseFloat(a) - parseFloat(b);
+  const divide = (a, b) => parseFloat(a) / parseFloat(b);
+  const multiply = (a, b) => parseFloat(a) * parseFloat(b);
 
   return { add, minus, divide, multiply };
 })();
@@ -70,6 +70,11 @@ function getOperator(event) {
 // this function is trigged on number DOM that we declared at the start of the document
 function getNumbers(event) {
   let value = event.target.innerHTML;
+  if (
+    value === "." &&
+    (equation.firstNumber.includes(".") || equation.secondNumber.includes("."))
+  )
+    return;
   equation.operator
     ? (equation.secondNumber = equation.secondNumber + value)
     : (equation.firstNumber = equation.firstNumber + value);
